@@ -1,0 +1,14 @@
+{
+  "name": "indecision-app",
+  "version": "1.0.0",
+  "description": "Indecision app from react course",
+  "main": "index.js",
+  "repository": "github.com/AlikanakelaKarwowski/React-course-udemy",
+  "author": "Alex Karwowski",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1"
+  }
+}
