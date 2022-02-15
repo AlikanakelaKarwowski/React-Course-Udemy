@@ -15,6 +15,10 @@ const template = (
             <li>Item 1</li>
             <li>Item 2</li>
         </ol>
+        <form>
+            <input type="text" name="option"/>
+            <button>Add Option</button>
+        </form>
     </div>
 );
 let count = 0;
