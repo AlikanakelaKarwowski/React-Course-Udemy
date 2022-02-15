@@ -2,47 +2,61 @@ console.log("app.js is running");
 
 // JSX - Javascript XML
 const app = {
-    title: "Some Title",
-    //subtitle: "Some Subtitle",
-    options: ['hell']
-}
-const template = (
-    <div>
-        <h1>{app.title}</h1>
-        {app.subtitle && <p> {app.subtitle}</p>}
-        <p>{app.options.length > 0 ? "Yes" : "No" }</p>
-        <ol>
-            <li>Item 1</li>
-            <li>Item 2</li>
-        </ol>
-    </div>
-);
-const user = {
-    name: 'Alex',
-    age: 24,
-    location: 'Utah'
-}
-const getLocation = (location) => {
-    if (location) {
-        return <p>Location: {location}</p>;
+    title: "Indecision App",
+    subtitle: "Put your life in the hands of a computer",
+    options: [],
+};
+
+const onFormSubmit = (e) => {
+    e.preventDefault();
+
+    const option = e.target.elements.option.value;
+    if (option) {
+        app.options.push(option);
+        console.log(option);
+        e.target.elements.option.value = "";
+        render();
     }
+};
+
+const removeAll = () => {
+    app.options = [];
+    render();
+};
+
+const makeDecision = () => {
+    const randomNum = Math.floor(Math.random() * app.options.length);
+    const option = app.options[randomNum];
+    console.log(randomNum);
+    alert(option);
+};
+
+
+const render =() => {
+    const template = (
+        <div>
+            <h1>{app.title}</h1>
+            {app.subtitle && <p>{app.subtitle}</p>}
+            <p>{app.options.length > 0 ? "Here are your options" : "No options"}</p>
+            <button disabled={app.options.length === 0} onClick={makeDecision}>What Should I Do</button>
+            <button onClick={removeAll}>Remove All</button>
+            <ol>
+            {
+                app.options.map((option) => {
+                    return <li key={option}>{option}</li>;
+                })
+            }
+            </ol>
+            
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option" />
+                <button>Add Option</button>
+            </form>
+        </div>
+    );
+    const appRoot = document.getElementById("app");
+    ReactDOM.render(template, appRoot);
 }
-let count = 0;
-
-const appRoot = document.getElementById("app");
 
 
-
-const renderCounterApp = () => {
-    const templateTwo = (
-    <div>
-        <h1>Count : {count}</h1>
-        <button id="my-id" onClick={() => {count++; renderCounterApp();}}>+1</button>
-        <button id="minus" onClick={() => {count--;renderCounterApp();}}>-1</button>
-        <button id="clear" onClick={() => {count = 0;renderCounterApp();}}>Reset</button>
-    </div>
-    ); 
-    ReactDOM.render(templateTwo, appRoot);
-}
-
-renderCounterApp()
+render()
