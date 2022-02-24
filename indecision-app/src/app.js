@@ -2,8 +2,10 @@ class IndecisionApp extends React.Component {
     constructor(props) {
         super(props)
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+        this.handlePick = this.handlePick.bind(this)
+        this.handleAddOption = this.handleAddOption.bind(this)
         this.state = {
-            options: ['thing 1', 'thing 2', 'thing 3', 'thingy']
+            options: []
         }
     }
     handleDeleteOptions(){
@@ -13,18 +15,40 @@ class IndecisionApp extends React.Component {
             }
         })
     }
+    handlePick(){
+        const randnum = Math.floor(Math.random() * this.state.options.length)
+        const option = this.state.options[randnum]
+        alert(option)
+    }
+    handleAddOption(option){
+        if (!option){
+            return 'Enter Valid Value to Add Option'
+        } else if (this.state.options.indexOf(option)> -1) {
+            return 'This Option Already Exists'
+        }
+        this.setState((prevState) => {
+            return {
+                options: prevState.options.concat(option)
+            }
+        })
+    }
     render() {
         const title = 'Indecision'
         const subtitle = 'Put your tasks in the hands of a computer'
         return (
             <div>
             <Header title={title} subtitle={subtitle}/>
-            <Action hasOptions={this.state.options.length >0}/>
+            <Action 
+            hasOptions={this.state.options.length >0}
+            handlePick={this.handlePick} 
+            />
             <Options 
             options={this.state.options}
             handleDeleteOptions={this.handleDeleteOptions}
             />
-            <AddOption />
+            <AddOption
+            handleAddOption={this.handleAddOption}
+            />
             </div>
         )
     }
@@ -42,14 +66,11 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
-    handlePick() {
-        alert('handlePick')
-    }
     render() {
         return (
             <div>
                 <button 
-                onClick={this.handlePick}
+                onClick={this.props.handlePick}
                 disabled={!this.props.hasOptions}
                 >
                     What Should I Do?
@@ -86,17 +107,26 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+    constructor(props) {
+        super(props)
+        this.handleAddOption = this.handleAddOption.bind(this)
+        this.state = {
+            error: undefined
+        }
+    }
     handleAddOption (e) {
         e.preventDefault();
         const option = e.target.elements.option.value.trim()
-
-        if(option){
-            alert(option)
-        }
+        const error = this.props.handleAddOption(option)
+        this.setState(() => {
+            return { error }
+        })
+        
     }
     render() {
         return (
             <div>
+            {this.state.error && <p>{this.state.error}</p>}
                 <form onSubmit={this.handleAddOption}>
                     <input type='text' name='option'/>
                     <button type='submit'>Add Option</button>
