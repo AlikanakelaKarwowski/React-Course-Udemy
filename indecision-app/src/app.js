@@ -1,13 +1,29 @@
 class IndecisionApp extends React.Component {
+    constructor(props) {
+        super(props)
+        this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+        this.state = {
+            options: ['thing 1', 'thing 2', 'thing 3', 'thingy']
+        }
+    }
+    handleDeleteOptions(){
+        this.setState(() => {
+            return {
+                options: []
+            }
+        })
+    }
     render() {
         const title = 'Indecision'
         const subtitle = 'Put your tasks in the hands of a computer'
-        const options = ['thing 1', 'thing 2', 'thing 3', 'thing 4']
         return (
             <div>
             <Header title={title} subtitle={subtitle}/>
-            <Action />
-            <Options options={options}/>
+            <Action hasOptions={this.state.options.length >0}/>
+            <Options 
+            options={this.state.options}
+            handleDeleteOptions={this.handleDeleteOptions}
+            />
             <AddOption />
             </div>
         )
@@ -32,25 +48,23 @@ class Action extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.handlePick}>What Should I Do?</button>
+                <button 
+                onClick={this.handlePick}
+                disabled={!this.props.hasOptions}
+                >
+                    What Should I Do?
+                </button>
             </div>
         )
     }
 }
 
 class Options extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleRemoveAll = this.handleRemoveAll.bind(this)
-    }
-    handleRemoveAll() {
-        console.log(this.props.options)
-        alert('handleRemoveAll')
-    }
+    
     render() {
         return (
             <div>
-                <button onClick={this.handleRemoveAll}>Remove All</button>
+                <button onClick={this.props.handleDeleteOptions}>Remove All</button>
                 {
                     this.props.options.map((option) => {
                         return <Option key={option} optionText={option} />
