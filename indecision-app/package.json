@@ -21,7 +21,6 @@
     "webpack-dev-server": "2.5.1"
   },
   "scripts": {
-    "server": "live-server .\\public\\",
     "dev": "webpack-dev-server",
     "build": "webpack --progress --colors"
   },
