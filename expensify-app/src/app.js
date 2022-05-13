@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Routes, Link, NavLink} from 'react-router-dom'
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
@@ -31,21 +31,39 @@ const HelpPage = () => (
 const NotFoundPage = () => (
     <div>
         <h1>404 Devs Fucked Up</h1>
+        <Link to='/'>Go Home Your Drunk</Link>
     </div>
 );
 
-
+const Header = () => (
+    <header>
+        <h1>Expensify App</h1>
+        <NavLink to="/" className={({ isActive }) => (isActive ? "is-active" : undefined)}>
+            Dashboard
+        </NavLink>
+        <NavLink to="/create" className={({ isActive }) => (isActive ? "is-active" : undefined)}>
+            Create Expense
+        </NavLink>
+        <NavLink to="/edit" className={({ isActive }) => (isActive ? "is-active" : undefined)}>
+            Edit Expense
+        </NavLink>
+        <NavLink to="/help" className={({ isActive }) => (isActive ? "is-active" : undefined)}>
+            Help
+        </NavLink>
+    </header>
+);
 
 const routes = (
-    <BrowserRouter>
-        <Switch>
-            <Route path='/' component={ExpenseDashboardPage} exact={true} />
-            <Route path='/create' component={AddExpensePage} /> 
-            <Route path='/edit' component={EditExpensePage} />
-            <Route path='/help' component={HelpPage}/>
-            <Route component={NotFoundPage} />
-        </Switch>
-    </BrowserRouter>
+    <Router>
+            <Header />
+                <Routes>
+                    <Route path='/' element={<ExpenseDashboardPage/>}/>
+                    <Route path='/create' element={<AddExpensePage/>}/> 
+                    <Route path='/edit' element={<EditExpensePage/>}/>
+                    <Route path='/help' element={<HelpPage/>}/>
+                    <Route path='*' element={<NotFoundPage/>}/>
+                </Routes>
+    </Router>
 )
 
 ReactDOM.render(routes, document.getElementById("app"));
