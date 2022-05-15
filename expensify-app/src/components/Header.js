@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 
-export const Header = () => (
+const Header = () => (
     <header>
         <h1>Expensify App</h1>
         <NavLink to="/" className={({ isActive }) => (isActive ? "is-active" : undefined)}>

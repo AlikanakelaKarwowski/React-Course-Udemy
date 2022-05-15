@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const AddExpensePage = () => (
+const AddExpensePage = () => (
     <div>
         <h1>Add Expense</h1>
     </div>
