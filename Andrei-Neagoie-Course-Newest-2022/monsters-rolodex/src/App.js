@@ -5,28 +5,28 @@ import "./App.css";
 
 const App = () => {
     const [searchField, setSearchField] = useState("");
-    const [monsters, setMonster] = useState([]);
+    const [katz, setKatz] = useState([]);
 
     console.log("render");
     useEffect(() => {
         fetch("https://jsonplaceholder.typicode.com/users")
             .then((res) => res.json())
-            .then((users) => setMonster(users));
+            .then((users) => setKatz(users));
     }, []);
 
     const onSearchChange = (event) => {
         const searchFieldString = event.target.value.toLowerCase();
         setSearchField(searchFieldString);
     };
-    const filteredMonsters = monsters.filter((monster) => {
-        return monster.name.toLowerCase().includes(searchField);
+    const filteredMonsters = katz.filter((kat) => {
+        return kat.name.toLowerCase().includes(searchField);
     });
 
     return (
         <div className="App">
             <h1 className="app-title">Kool Katz</h1>
-            <SearchBox onChangeHandler={onSearchChange} className="monster-search-box" placeholder="Search Monsters" />
-            <CardList monsters={filteredMonsters} />
+            <SearchBox onChangeHandler={onSearchChange} className="kat-search-box" placeholder="Search katz" />
+            <CardList katz={filteredMonsters} />
         </div>
     );
 };
@@ -35,7 +35,7 @@ const App = () => {
 //     constructor() {
 //         super();
 //         this.state = {
-//             monsters: [],
+//             katz: [],
 //             searchField: "",
 //         };
 //     }
@@ -44,7 +44,7 @@ const App = () => {
 //             .then((res) => res.json())
 //             .then((users) =>
 //                 this.setState(() => {
-//                     return { monsters: users };
+//                     return { katz: users };
 //                 })
 //             );
 //     }
@@ -57,20 +57,20 @@ const App = () => {
 //     };
 //     render() {
 //         console.log("render from appjs");
-//         const { monsters, searchField } = this.state;
+//         const { katz, searchField } = this.state;
 //         const { onSearchChange } = this;
-//         const filteredMonsters = monsters.filter((monster) => {
-//             return monster.name.toLowerCase().includes(searchField);
+//         const filteredMonsters = katz.filter((kat) => {
+//             return kat.name.toLowerCase().includes(searchField);
 //         });
 //         return (
 //             <div className="App">
 //             <h1 className="app-title">Kool Katz</h1>
 //                 <SearchBox
 //                     onChangeHandler={onSearchChange}
-//                     className="monster-search-box"
-//                     placeholder="Search Monsters"
+//                     className="kat-search-box"
+//                     placeholder="Search katz"
 //                 />
-//                 <CardList monsters={filteredMonsters} />
+//                 <CardList katz={filteredMonsters} />
 //             </div>
 //         );
 //     }
